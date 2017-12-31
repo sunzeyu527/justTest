@@ -1,0 +1,156 @@
+当安装完成之后 先输入git config --global user.name + '自定义名称'
+
+再输入 git config --global user.email+'你的邮箱地址'
+
+以上两步代表的是身份的确认 以后再团队合作的时候 就会知道是谁修改了代码
+
+mkdir '文件夹名字' 创建一个文件夹，也可直接md，但是在cmd下没问题 在git BASH下会出现报错
+
+git init 可以将当前目录变成git可以管理的仓库
+
+注意：版本控制系统无法跟踪Microsoft Word的改动，因为它的格式是二进制的
+
+必须纯文本，而且要是utf-8的编码格式
+
+git add example.txt  这是将编辑好的文本文档存入git的stage区也就是从工作区到暂存区
+
+git commit -m '加上一段本次改动的说明' 将暂存区的文档存入仓库
+
+git status 查看现在git仓库的状态
+
+git diff 可以查看上次修改的内容 但是这个指令需要是没有提交到仓库的状态才有效
+
+git log 可以查看历史记录 版本号commit id 作者 时间 改动说明
+
+git log --pretty=oneline 精简版本git git log
+
+git reset --hard HEAD^ 往上回退一个版本 HEAD^^两个版本 多个版本可以用HEAD~数字
+
+git reset --hard 这里是commit id版本号的前几位 这个指令可以通过版本号回退到指定的版本
+
+git reflog 来记录你操作的每一次命令，如果找不到之前的版本号，可以通过这个指令来找回
+
+工作区 Working Directory 就是你在电脑里面能看到的目录
+
+版本库 Repository 里面主要有stage或者叫index 暂存区，也就是每次git add 将文件存放的位置
+
+master分支 也就是每次git commit -m 将文件提交的时候 git为我们创建的当前分支
+
+HEAD 就是一个指针 自动指向当前最新的分支
+
+每次git commit -m 每次提交的是当前暂存区的文件，也就是说git add 之后的文件，这一点要记住
+
+git diff HEAD -- 文件名称.后缀 命令可以查看工作区和版本库里面最新版本的区别
+
+可以多次的git add 最后一次来git commit -m 来提交
+
+git checkout -- 文件名.后缀 把当前文件在工作区的修改全部撤掉
+
+分两种情况
+
+1 当前文件修改之后还没有通过git add到暂存区 这个时候撤销就回到和版本库一模一样的状态
+
+2 当前文档已经在暂存区 现在撤回就是回到添加到暂存区后的状态 也就是说这个时候用git checkout
+
+这个指令已经没卵用了，那就要看下一个指令
+
+git reset 这个指令既可以退回版本，也可将暂存区的修改退回到工作区，而且当我们用HEAD时，
+
+表示最新的版本 也就是git reset HEAD '文件名.后缀名'
+
+退回之后，再用git checkout 指令就可以彻底将之前暂存区的文件修改回来了
+
+如果不小心将工作区的文件给删除了，可以用git checkout '文件名.后缀名'来进行找回
+
+也就是说git checkout其实就是用版本库里面的版本替换工作区的版本，所以工作区的文件无论是
+
+更改还是删除，都可以进行一键还原
+
+git rm '文件名.后缀名' + git commit -m 'remove 文件名' 文件就从版本库里面也彻底删除了
+
+Git的杀手级功能之一：远程仓库
+
+Git是分布式版本控制系统，同一个Git仓库，可以分布到不同的机器上也就是说最开始只有一台机器
+
+有一个原始版本，此后别的几起可以克隆这个原始的版本库，而且每台机器的版本库都是一样的
+
+并没有主次之分
+
+实际情况是 找一台电脑充当Git服务器的角色，每天24小时开机，其他人从这个服务器克隆一份
+
+到自己的电脑上，并且将各自的提交推送到服务器仓库里面去，也可以从服务器仓库中拉去别人的提交
+
+第二种方式 GitHub 注册一个GitHub账号，就可以免费获得Git远程仓库
+
+step1 创建SSH KEY 在 用户目录下看有没有.ssh目录，如果有在看看有没有id_rsa和id_rsa.pub
+
+这两个文件，如果有直接跳到step2，如果没有，打开shell windows下打开 Git Bash 创建SSH Key
+
+ssh-keygen -t rsa -C '邮箱地址' 一路回车使用默认值就可
+
+如果一切顺利，可以再用户主目录下找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件
+
+备注：主目录C:\Users\Administrator
+
+用cmd命令行进入当前文件夹也就是C:\Users\Administrator\.ssh
+
+然后 more id_rsa.pub命令查看公钥的内容 不要那么low直接打开
+
+然后登陆github 打开 Account settings  SSH Keys页面
+
+title随便添加一个 再将key粘贴进去，也就是命令行显示的那一坨东西
+
+为什么github需要ssh key
+
+因为github要识别出来你的推送确实是你自己的操作，Git支持ssh协议所以只要github知道你的
+
+公钥就可以确认只有你自己才能推送
+
+github支持你添加多个key假如你有多台电脑，一会是公司的，一会是家里的只要把每台电脑的key
+
+添加到github 就可以在每台电脑往github上推送了
+
+添加远程仓库
+
+将本地仓库和git仓库进行远程同步，这样就实现了代码的同步
+
+登陆github 右上角找到create a new repo按钮 创建一个新的仓库
+
+在Repository name 填入 learngit 其他保持默认 点Create repository
+
+进入仓库 找到http/ssh 选中ssh 里面的连接就是本地仓库需要关联的github仓库的地址
+
+在本地仓库下运行 git remote add origin +前面的ssh地址 git@.....
+
+如果报错fatal: remote origin already exists.
+
+添加错误了  那就删除了  git remote rm origin
+
+再来一遍之前的指令 ok congratulation！恭喜你成了
+
+git push -u origin master 这就将当前仓库的分支都推送到远程github仓库里
+
+由于第一次远程仓库是空的 -u参数可以使Git把本地的master分支内容推送到远程新的master分支
+
+还会把master分支关联起来，在以后的推送或者拉取的时候就可以简化命令
+
+这样从现在起只要本地做了提交。就可以通过 git push origin master 将master分支的内容推送到github
+
+在第一次使用Git的clone和push命令连接github的时候，Git会给你发送一个警告
+
+The authenticity of host 'github.com (xx.xx.xx.xx)' can't be established.
+RSA key fingerprint is xx.xx.xx.xx.xx.
+Are you sure you want to continue connecting (yes/no)?
+
+需要确认yes
+
+小结一下：
+	要关联一个远程仓库 git remote add origin git@...
+
+	第一次向远程仓库推送master分支所有内容 git push -u origin master
+
+	之后每次 git push origin master
+
+分布式最大的优势就是在本地工作的时候，完全不需要考虑远程仓库的存在，没有网络的情况也
+
+可以正常工作，等待有网络的时候在推送就可以了，真是太方便了

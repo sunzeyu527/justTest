@@ -5,3 +5,5 @@ git is a very useful
 你说我不懂你的问题
 我说你懂个p
 ---以上来自都选c
+hello everybody
+function promise(resolve, reject){}

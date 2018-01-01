@@ -173,3 +173,27 @@ ssh-keygen -t rsa -C 'sunzeyu527@163.com'
 
 后面的克隆地址规则就是首先是 git@github.com :用户名/仓库名称.git
 
+创建一个新的分支 之后所有的操作都是针对新的分支来进行
+
+最后只需要将新的分支和master分支进行合并就可以
+
+git checkout -b dev  这条指令代表创建一个新的分支dev，然后切换到dev分支
+
+相当于以下两条指令 git branch dev git checkout dev
+
+git branch 命令查看当前的分支 该命令会列出所有的分支 当前分支前面会有一个*
+
+这个时候就可以在当前dev分支上正常进行提交
+
+git add '文件名.后缀' git commit -m '说明'
+
+但是这个时候当你切换回master分支的时候会发现当前做的修改都没有了，那是因为你所有的修改
+
+都在dev分支上，而master分支并没有和dev分支进行合并
+
+git merge命令用于合并指定分支到当前分支，也就是当前需要输入git merge dev 将dev分支所做的修改
+
+都合并到master分支上
+
+最后，git branch -d dev 将dev分支删除，这个时候在输入git brach就会发现目前只有master分支了
+

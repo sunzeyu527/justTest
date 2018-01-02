@@ -199,4 +199,18 @@ git merge命令用于合并指定分支到当前分支，也就是当前需要�
 
 最后，git branch -d dev 将dev分支删除，这个时候在输入git brach就会发现目前只有master分支了
 
+多人合作模式
 
+当你从远程仓库克隆时，实际上git自动把本地的master分支和远程的master分支对应起来了。
+
+并且，远程仓库的默认名称是origin
+
+查看远程仓库的信息 git remote 或者 git remote -v看详细的信息 最后面小括号里面的
+
+fetch 和push实际代表的是权限 抓取和push的权限没有就代表没有权限。
+
+推送分支 git push origin master/dev 
+
+master分支是主分支，因此需要时刻与远程同步，dev分支是开发分支 也需要远程同步
+
+抓取分支  git clone git@github.com:sunzeyu527/justTest.git

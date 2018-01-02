@@ -214,3 +214,22 @@ fetch 和push实际代表的是权限 抓取和push的权限没有就代表没�
 master分支是主分支，因此需要时刻与远程同步，dev分支是开发分支 也需要远程同步
 
 抓取分支  git clone git@github.com:sunzeyu527/justTest.git
+
+如果这个时候同事已经向origin/dev分支推送了他的提交，而碰巧你也对同样的文件做了提交修改
+
+这个时候可能会报错
+error: failed to push some refs to 'git@github.com:michaelliao/learngit.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+推送失败，因为你的最新提交和小伙伴的提交是有冲突的，解决的办法是
+
+git pull 把最新的提交从origin/dev上抓下来，然后在本地合并，解决冲突，再推送
+
+如果git pull也失败了 原因是没有指定dev分支与远程dev分支的连接，设置如下
+
+git branch --set-upstream dev origin/dev
+
+在进行pull
